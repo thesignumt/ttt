@@ -4,7 +4,7 @@ from textual.widgets import Static
 
 
 class TTT(App):
-    CSS_PATH = "styles.tcss"
+    CSS_PATH = "styles.css"
 
     def compose(self) -> ComposeResult:
         with Grid():
