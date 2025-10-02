@@ -1,0 +1,12 @@
+Grid {
+    grid-size: 3 3;
+    grid-columns: 1fr 1fr 1fr;
+    grid-rows: 1fr 1fr 1fr;
+    grid-gutter: 1;
+    height: 100%;
+}
+
+Static {
+    border: solid white;
+    content-align: center middle;
+}
