@@ -30,7 +30,7 @@ WIN_COMBOS = [
 ]
 
 
-def clrscr() -> None:
+def clsscr() -> None:
     os.system("cls" if os.name == "nt" else "clear")
 
 
@@ -86,7 +86,7 @@ def menu():
     ]
     key_to_index = {k: i for i, (k, _) in enumerate(options)}
     while True:
-        clrscr()
+        clsscr()
         figlet = figlet_format("TicTacToe")
         print(f"{C.GRAY}{figlet}{C.RESET}\n")
         for key, label in options:
@@ -117,7 +117,7 @@ class TicTacToe:
         self.board = Board()
 
     def _draw_board(self) -> None:
-        clrscr()
+        clsscr()
         g, r = C.GRAY, C.RESET
         print("Tic-Tac-Toe\n")
         print(self.board)
@@ -162,6 +162,7 @@ class TicTacToe:
             elif key in (b"r", b"R"):
                 time.sleep(0.05)
                 self._reset_game()
+                clsscr()
                 return "reset"
 
     def _get_computer_move(self) -> None:
@@ -228,13 +229,12 @@ class TicTacToe:
         print(f"{c}[2]{r} {g}Return to main menu{r}")
         print(f"{c}[3]{r} {g}Exit game{r}")
         while True:
-            print(f"{g}Enter choice ({c}1{g}/{c}2{g}/{c}3{g}): {r}", end="", flush=True)
             key = msvcrt.getch()
             if key in (b"1",):
                 return "rematch"
             elif key in (b"2",):
                 return "menu"
-            elif key in (b"3",):
+            elif key in (b"3", b"q", b"Q"):
                 return "exit"
 
     def _play_game(self):
@@ -276,9 +276,10 @@ class TicTacToe:
                     + " won!"
                 )
 
-            input("\ntype char to continue...")
+            print("\ntype char to continue...", end="", flush=True)
+            msvcrt.getch()
 
-            clrscr()
+            clsscr()
             print(self.board)
             if self.winner == "Draw":
                 print("draw...")
@@ -293,6 +294,7 @@ class TicTacToe:
                 )
             choice = self._post_game_menu()
             if choice == "rematch":
+                clsscr()
                 continue
             elif choice == "menu":
                 break
