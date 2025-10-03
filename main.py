@@ -4,6 +4,8 @@ import random
 import time
 from dataclasses import dataclass
 
+from pyfiglet import figlet_format
+
 from utils import WRandom
 
 
@@ -85,7 +87,8 @@ def menu():
     key_to_index = {k: i for i, (k, _) in enumerate(options)}
     while True:
         clrscr()
-        print(f"{C.GRAY}Main Menu{C.RESET}\n")
+        figlet = figlet_format("TicTacToe")
+        print(f"{C.GRAY}{figlet}{C.RESET}\n")
         for key, label in options:
             print(f"{C.GRAY}[{key}]{C.RESET} {label}")
 
@@ -217,43 +220,83 @@ class TicTacToe:
             else:
                 break
 
-    def _play_game(self):
-        self._draw_board()
-        first = WRandom([("X", 3), ("O", 1)])
-        if first == "O":
-            print("AI goes first!\n")
-            time.sleep(0.8)
-            self._get_computer_move()
-            self._draw_board()
-        else:
-            print("You go first!\n")
-            time.sleep(0.8)
-        self.running = True
-        self.winner = None
-        self.board.reset()
-        while self.running:
-            result = self._get_human_move()
-            if result == "reset":
-                continue
-            self._draw_board()
-            self._update_game_state()
-            if not self.running:
-                break
-            self._get_computer_move()
-            self._draw_board()
-            self._update_game_state()
+    def _post_game_menu(self):
+        g, c, r = C.GRAY, C.CYAN, C.RESET
+        print(f"\n{g}What would you like to do next?{r}")
+        print(f"{c}[1]{r} {g}Rematch{r}")
+        print(f"{c}[2]{r} {g}Return to main menu{r}")
+        print(f"{c}[3]{r} {g}Exit game{r}")
+        while True:
+            print(f"{g}Enter choice ({c}1{g}/{c}2{g}/{c}3{g}): {r}", end="", flush=True)
+            key = msvcrt.getch()
+            if key in (b"1",):
+                return "rematch"
+            elif key in (b"2",):
+                return "menu"
+            elif key in (b"3",):
+                return "exit"
 
-        if self.winner == "Draw":
-            print("draw...")
-        elif self.winner:
-            print(
-                (
-                    f"{C.RED}YOU{C.RESET}"
-                    if self.winner == "X"
-                    else f"The {C.CYAN}AI{C.RESET}"
+    def _play_game(self):
+        while True:
+            self._draw_board()
+            first = WRandom([("X", 3), ("O", 1)])
+            if first == "O":
+                print("AI goes first!\n")
+                time.sleep(0.8)
+                self._get_computer_move()
+                self._draw_board()
+            else:
+                print("You go first!\n")
+                time.sleep(0.8)
+            self.running = True
+            self.winner = None
+            self.board.reset()
+            while self.running:
+                result = self._get_human_move()
+                if result == "reset":
+                    continue
+                self._draw_board()
+                self._update_game_state()
+                if not self.running:
+                    break
+                self._get_computer_move()
+                self._draw_board()
+                self._update_game_state()
+
+            if self.winner == "Draw":
+                print("draw...")
+            elif self.winner:
+                print(
+                    (
+                        f"{C.RED}YOU{C.RESET}"
+                        if self.winner == "X"
+                        else f"The {C.CYAN}AI{C.RESET}"
+                    )
+                    + " won!"
                 )
-                + " won!"
-            )
+
+            input("\ntype char to continue...")
+
+            clrscr()
+            print(self.board)
+            if self.winner == "Draw":
+                print("draw...")
+            elif self.winner:
+                print(
+                    (
+                        f"{C.RED}YOU{C.RESET}"
+                        if self.winner == "X"
+                        else f"The {C.CYAN}AI{C.RESET}"
+                    )
+                    + " won!"
+                )
+            choice = self._post_game_menu()
+            if choice == "rematch":
+                continue
+            elif choice == "menu":
+                break
+            elif choice == "exit":
+                exit(0)
 
 
 if __name__ == "__main__":
