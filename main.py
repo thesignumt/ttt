@@ -158,11 +158,10 @@ class TicTacToe:
                     return
             elif key in (b"f", b"F"):
                 self.running = False
-                return
+                return "quit"
             elif key in (b"r", b"R"):
                 time.sleep(0.05)
-                self._reset_game()
-                clsscr()
+                self._reset_game(True)
                 return "reset"
 
     def _get_computer_move(self) -> None:
@@ -239,6 +238,7 @@ class TicTacToe:
 
     def _play_game(self):
         while True:
+            clsscr()
             self._draw_board()
             first = WRandom([("X", 3), ("O", 1)])
             if first == "O":
@@ -249,13 +249,13 @@ class TicTacToe:
             else:
                 print("You go first!\n")
                 time.sleep(0.8)
-            self.running = True
-            self.winner = None
-            self.board.reset()
+            self._reset_game(True)
             while self.running:
                 result = self._get_human_move()
                 if result == "reset":
                     continue
+                elif result == "quit":
+                    exit(0)
                 self._draw_board()
                 self._update_game_state()
                 if not self.running:
@@ -266,6 +266,7 @@ class TicTacToe:
 
             if self.winner == "Draw":
                 print("draw...")
+                time.sleep(0.8)
             elif self.winner:
                 print(
                     (
@@ -275,9 +276,7 @@ class TicTacToe:
                     )
                     + " won!"
                 )
-
-            print("\ntype char to continue...", end="", flush=True)
-            msvcrt.getch()
+                time.sleep(0.8)
 
             clsscr()
             print(self.board)
@@ -294,7 +293,7 @@ class TicTacToe:
                 )
             choice = self._post_game_menu()
             if choice == "rematch":
-                clsscr()
+                self.board.reset()
                 continue
             elif choice == "menu":
                 break
