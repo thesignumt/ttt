@@ -135,11 +135,12 @@ class TicTacToe:
                 print(f"{g}-----------{r}")
         print(f"\n({C.RED}X{r}=You, {C.CYAN}O{r}=Computer, f=quit, r=restart)\n")
 
-    def _reset_game(self) -> None:
+    def _reset_game(self, nodraw: bool = False) -> None:
         self.board.reset()
         self.winner = None
         self.running = True
-        self._draw_board()
+        if nodraw:
+            self._draw_board()
 
     def _get_human_move(self) -> str | None:
         while True:
