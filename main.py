@@ -77,6 +77,23 @@ class Board:
         return any(combo <= positions for combo in map(set, WIN_COMBOS))
 
 
+def menu():
+    options = [
+        ("h", "Play TicTacToe"),
+        ("q", "Quit"),
+    ]
+    key_to_index = {k: i for i, (k, _) in enumerate(options)}
+    while True:
+        clrscr()
+        print(f"{C.GRAY}Main Menu{C.RESET}\n")
+        for key, label in options:
+            print(f"{C.GRAY}[{key}]{C.RESET} {label}")
+
+        key = msvcrt.getch().decode().lower()
+        if key in key_to_index:
+            return key_to_index[key]
+
+
 class TicTacToe:
     keymap = {
         b"q": 1,
@@ -193,8 +210,15 @@ class TicTacToe:
             self.running = False
 
     def __call__(self):
-        self._draw_board()
+        while True:
+            choice = menu()
+            if choice == 0:
+                self._play_game()
+            else:
+                break
 
+    def _play_game(self):
+        self._draw_board()
         first = WRandom([("X", 3), ("O", 1)])
         if first == "O":
             print("AI goes first!\n")
@@ -204,6 +228,9 @@ class TicTacToe:
         else:
             print("You go first!\n")
             time.sleep(0.8)
+        self.running = True
+        self.winner = None
+        self.board.reset()
         while self.running:
             result = self._get_human_move()
             if result == "reset":
