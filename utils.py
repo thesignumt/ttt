@@ -2,7 +2,9 @@ import random
 from typing import Any
 
 
-class WeightedRandom:
+class WRandom:
+    """weighted random"""
+
     def __init__(self, choices: list[tuple[Any, int]]):
         self.num_choices = len(choices)
         self.items, weights = zip(*choices)
@@ -43,7 +45,7 @@ class WeightedRandom:
             self.probability_table[leftover_idx] = 1.0
             self.alias_table[leftover_idx] = leftover_idx
 
-    def __call__(self) -> Any:
+    def choice(self) -> Any:
         # choose a random index and decide based on probability table
         idx = random.randint(0, self.num_choices - 1)
         if random.random() < self.probability_table[idx]:
