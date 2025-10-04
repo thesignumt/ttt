@@ -247,7 +247,6 @@ class TicTacToe:
 
     def _play_game(self):
         while True:
-            clsscr()
             self._draw_board()
             if WRandom([("X", 3), ("O", 1)]).choice() == "O":
                 self._get_computer_move()
