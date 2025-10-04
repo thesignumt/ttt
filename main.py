@@ -248,10 +248,10 @@ class TicTacToe:
     def _play_game(self):
         while True:
             self._draw_board()
+            self._reset_game(True)
             if WRandom([("X", 3), ("O", 1)]).choice() == "O":
                 self._get_computer_move()
                 self._draw_board()
-            self._reset_game(True)
             while self.running:
                 result = self._get_human_move()
                 if result == "reset":
