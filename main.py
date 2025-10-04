@@ -173,7 +173,7 @@ class TicTacToe:
                 self._reset_game(True)
                 return "reset"
 
-    def _get_computer_move(self) -> None:
+    def _get_ai_move(self) -> None:
         board = self.board.board
         free = [i + 1 for i, v in enumerate(board) if v == EMPTY]
         if not free:
@@ -250,7 +250,7 @@ class TicTacToe:
             self._draw_board()
             self._reset_game(True)
             if WRandom([("X", 3), ("O", 1)]).choice() == "O":
-                self._get_computer_move()
+                self._get_ai_move()
                 self._draw_board()
             while self.running:
                 result = self._get_human_move()
@@ -261,7 +261,7 @@ class TicTacToe:
                 self._update_game_state()
                 if not self.running:
                     break
-                self._get_computer_move()
+                self._get_ai_move()
                 self._draw_board()
                 self._update_game_state()
 
