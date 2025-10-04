@@ -258,7 +258,6 @@ class TicTacToe:
                     continue
                 elif result == "quit":
                     exit(0)
-                self._draw_board()
                 self._update_game_state()
                 if not self.running:
                     break
