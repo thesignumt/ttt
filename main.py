@@ -34,6 +34,15 @@ def clsscr() -> None:
     os.system("cls" if os.name == "nt" else "clear")
 
 
+def display_winner(winner: str) -> None:
+    if winner == "Draw":
+        print("draw...")
+    elif winner == "X":
+        print(f"{C.RED}YOU{C.RESET} won!")
+    elif winner == "O":
+        print(f"The {C.CYAN}AI{C.RESET} won!")
+
+
 class Board:
     def __init__(self) -> None:
         self.reset()
@@ -258,33 +267,11 @@ class TicTacToe:
                 self._draw_board()
                 self._update_game_state()
 
-            if self.winner == "Draw":
-                print("draw...")
-                time.sleep(0.8)
-            elif self.winner:
-                print(
-                    (
-                        f"{C.RED}YOU{C.RESET}"
-                        if self.winner == "X"
-                        else f"The {C.CYAN}AI{C.RESET}"
-                    )
-                    + " won!"
-                )
-                time.sleep(0.8)
+            display_winner(self.winner or " ")
 
             clsscr()
             print(self.board)
-            if self.winner == "Draw":
-                print("draw...")
-            elif self.winner:
-                print(
-                    (
-                        f"{C.RED}YOU{C.RESET}"
-                        if self.winner == "X"
-                        else f"The {C.CYAN}AI{C.RESET}"
-                    )
-                    + " won!"
-                )
+            display_winner(self.winner or " ")
             choice = self._post_game_menu()
             if choice == "rematch":
                 self.board.reset()
