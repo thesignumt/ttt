@@ -6,6 +6,7 @@ class WRandom:
     """weighted random"""
 
     def __init__(self, choices: list[tuple[Any, int]]):
+        choices = [(item, weight) for item, weight in choices if weight > 0]
         self.num_choices = len(choices)
         self.items, weights = zip(*choices)
         total_weight = sum(weights)
