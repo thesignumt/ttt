@@ -240,8 +240,7 @@ class TicTacToe:
         while True:
             clsscr()
             self._draw_board()
-            first = WRandom([("X", 3), ("O", 1)]).choice()
-            if first == "O":
+            if WRandom([("X", 3), ("O", 1)]).choice() == "O":
                 self._get_computer_move()
                 self._draw_board()
             self._reset_game(True)
