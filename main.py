@@ -242,13 +242,8 @@ class TicTacToe:
             self._draw_board()
             first = WRandom([("X", 3), ("O", 1)])
             if first == "O":
-                print("AI goes first!\n")
-                time.sleep(0.8)
                 self._get_computer_move()
                 self._draw_board()
-            else:
-                print("You go first!\n")
-                time.sleep(0.8)
             self._reset_game(True)
             while self.running:
                 result = self._get_human_move()
