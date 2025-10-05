@@ -1,2 +1,2 @@
 def tut() -> None:
-    pass
+    print("TUT")
