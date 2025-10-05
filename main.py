@@ -6,7 +6,8 @@ from dataclasses import dataclass
 
 from pyfiglet import figlet_format
 
-from utils import WRandom
+from .tut import tut
+from .utils import WRandom
 
 
 @dataclass
@@ -91,6 +92,7 @@ class Board:
 def menu():
     options = [
         ("h", "Play TicTacToe"),
+        ("j", "How to Win Every Time"),
         ("q", "Quit"),
     ]
     key_to_index = {k: i for i, (k, _) in enumerate(options)}
@@ -225,10 +227,13 @@ class TicTacToe:
     def __call__(self):
         while True:
             choice = menu()
-            if choice == 0:
-                self._play_game()
-            else:
-                break
+            match choice:
+                case 0:
+                    self._play_game()
+                case 1:
+                    tut()
+                case _:
+                    break
 
     def _post_game_menu(self):
         g, c, r = C.GRAY, C.CYAN, C.RESET

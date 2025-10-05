@@ -1,0 +1,2 @@
+def tut() -> None:
+    pass
