@@ -197,7 +197,7 @@ class TicTacToe:
                 self.board.update(pos, "O")
                 return
 
-        corners = [p for p in [1, 3, 7, 9] if p in free]
+        corners = [p for p in [1, 2, 3, 4, 6, 7, 8, 9] if p in free]
         if corners:
             self.board.update(random.choice(corners), "O")
             return
