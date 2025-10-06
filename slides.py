@@ -28,10 +28,11 @@ class Slides:
     def run(self) -> None:
         while True:
             self.show_slide()
-            key = getch()
-            if key == "n" and self.index < len(self.slides) - 1:
-                self.index += 1
-            elif key == "p" and self.index > 0:
-                self.index -= 1
-            elif key == "q":
-                break
+
+            match getch():
+                case "n" if self.index < len(self.slides) - 1:
+                    self.index += 1
+                case "p" if self.index > 0:
+                    self.index -= 1
+                case "q":
+                    break
