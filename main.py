@@ -197,18 +197,16 @@ class TicTacToe:
                 self.board.update(pos, "O")
                 return
 
-        # 3. Take a corner if free
         corners = [p for p in [1, 3, 7, 9] if p in free]
         if corners:
             self.board.update(random.choice(corners), "O")
             return
 
-        # 4. Take center if free
         if 5 in free:
             self.board.update(5, "O")
             return
 
-        # 5. Pick random
+        # Pick random
         self.board.update(random.choice(free), "O")
 
     def _check_winner(self, symbol) -> bool:
