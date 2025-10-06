@@ -1,9 +1,6 @@
 import msvcrt
 import os
 
-# ANSI colors
-RED = "\033[91m"
-CYAN = "\033[96m"
 DARKGRAY = "\033[90m"
 RESET = "\033[0m"
 
@@ -21,16 +18,26 @@ class Slides:
         os.system("cls" if os.name == "nt" else "clear")
 
     def show_slide(self) -> None:
+        if not self.slides:
+            return
         self.clear()
         print(self.slides[self.index])
         print(f"\n{DARKGRAY}[n] next  |  [p] prev  |  [q] quit{RESET}")
 
     def run(self) -> None:
+        if not self.slides:
+            return
+
+        size = len(self.slides)
+
+        l_idx = -1
         while True:
-            self.show_slide()
+            if self.index != l_idx:
+                self.show_slide()
+                l_idx = self.index
 
             match getch():
-                case "n" if self.index < len(self.slides) - 1:
+                case "n" if self.index < size - 1:
                     self.index += 1
                 case "p" if self.index > 0:
                     self.index -= 1
