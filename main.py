@@ -236,9 +236,9 @@ class TicTacToe:
     def _post_game_menu(self):
         g, c, r = C.GRAY, C.CYAN, C.RESET
         print(f"\n{g}What would you like to do next?{r}")
-        print(f"{c}[a]{r} {g}Rematch{r}")
-        print(f"{c}[s]{r} {g}Return to main menu{r}")
-        print(f"{c}[d]{r} {g}Exit game{r}")
+        print(f"{c}[h]{r} {g}Rematch{r}")
+        print(f"{c}[j]{r} {g}Return to main menu{r}")
+        print(f"{c}[k]{r} {g}Exit game{r}")
         while True:
             key = msvcrt.getch()
             if key in (b"a",):
