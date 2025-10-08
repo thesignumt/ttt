@@ -39,14 +39,16 @@ def fmt_ttt(
     or_indices = []
     for idx, (board, meta) in enumerate(boards_dict.items()):
         hl = meta.get("hl", (-1,))
-        arrowed = meta.get("arrowed", False)
-        or_ = meta.get("ored", False)
         rows = fmt_single(board, hl)
         formatted_boards.append(rows)
-        if arrowed:
-            arrowed_indices.append(idx)
-        if or_:
-            or_indices.append(idx)
+
+        match meta:
+            case {"arrowed": True}:
+                arrowed_indices.append(idx)
+            case {"ored": True}:
+                or_indices.append(idx)
+            case _:
+                pass
 
     # Pad boards to equal height
     max_lines = max(len(b) for b in formatted_boards)
