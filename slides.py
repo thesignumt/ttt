@@ -22,7 +22,8 @@ class Slides:
             return
         self.clear()
         print(self.slides[self.index])
-        print(f"\n{DARKGRAY}[n] next  |  [p] prev  |  [q] quit{RESET}")
+        print(f"\n{DARKGRAY}[{self.index + 1}/{len(self.slides)}]{RESET}")
+        print(f"{DARKGRAY}[n] next  |  [p] prev  |  [q] quit{RESET}")
 
     def run(self) -> None:
         if not self.slides:
