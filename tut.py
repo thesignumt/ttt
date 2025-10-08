@@ -39,6 +39,8 @@ def fmt_ttt(
     or_indices = []
     for idx, (board, meta) in enumerate(boards_dict.items()):
         hl = meta.get("hl", (-1,))
+        if not (isinstance(hl, tuple) and all(isinstance(x, int) for x in hl)):
+            hl = (hl,)
         rows = fmt_single(board, hl)
         formatted_boards.append(rows)
 
