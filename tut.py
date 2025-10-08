@@ -4,7 +4,7 @@ RED = "\033[91m"
 CYAN = "\033[96m"
 GRAY = "\033[90m"
 YELLOW = "\033[33m"
-SPACE_HL = "\033[43m"
+SPACE_HL = "\033[42m"
 RESET = "\033[0m"
 
 
@@ -85,25 +85,26 @@ If you're first to move, you should always
 pick a corner as they give you the most
 chances to create multiple threats.
 
-{fmt_ttt({"x": {}})}""",
+{fmt_ttt({"x": {}})}
+
+we'll stick with this for now..""",
     f"""
 2. [CASE 1] SKIP TO STEP 3 SAME CASE
 
 If your opponent picks a corner then choose either
 of the 2 remaining corners.
 
-p.s. yellow highlight is showing the choices available
-
-1.           2.           3.
 {fmt_ttt({"x o   x x": {"hl": (6, 8)}, "x x   o x": {"hl": (2, 8)}, "x x   x o": {"hl": (2, 6)}})}""",
     f"""
 2. [CASE 2] SKIP TO STEP 3 SAME CASE
 
 If your opponent picks an edge cell then choose any
 unoccupied corner that is not touching the opponent's
-cell.
+cell apart from the corner opposite to you and it mustn't
+make it so that your opponent's cell is between 2 of your
+cells.
 
-{fmt_ttt({"x xo    x": {"hl": (2, 8)}, "x x    o": {"hl": (2,)}})}""",
+{fmt_ttt({"x xo": {"hl": 2}, "x x   xo": {"hl": (2, 6)}, "x x  ox": {"hl": (2, 6)}, "xo    x": {"hl": 6}})}""",
     """
 2. [CASE 3] 
 
@@ -116,8 +117,7 @@ plays correctly, the game will always end in a draw.
 
 If your opponent makes a mistake, you can still set up
 forks or traps by choosing corners that are not adjacent,
-but against perfect play, every winning path will be blocked.
-""",
+but against perfect play, every winning path will be blocked.""",
     f"""
 3. [CASE 1] corner
 
@@ -131,11 +131,37 @@ so after that you have to pick the last corner to get a fork.
 
 {fmt_ttt({"x oo  x x": {}, "x oox xox": {"arrowed": True}, "x ooo xxx": {"ored": True}})}
 """,
+    f"""
+3. [CASE 2] edge
+
+{fmt_ttt({"x xo": {}, "x x    o": {}})}
+
+after that your opponent will block with
+
+{fmt_ttt({"xoxo": {"hl": 1}, "xox    o": {"hl": 1}})}
+
+then we can pick any of the moves
+highlighted below so we get two winning
+positions.
+
+{fmt_ttt({"xoxox   x": {"hl": (4, 8)}, "xox x  o": {"hl": (4, 6, 8)}})}""",
+    """
+4. Opponent Starts first
+
+Pick the center if your opponent didn't pick it, if they didn't
+then pick a corner.
+
+After all of that you still have to block their every move because you
+can't win unless your opponent is clueless.
+""",
 ]
 
 
 def tut() -> None:
-    Slides(slides).run()
+    Slides(
+        slides,
+        f"{YELLOW}xo{RESET} = different options\n{SPACE_HL} {RESET} = successor move",
+    ).run()
 
 
 if __name__ == "__main__":
