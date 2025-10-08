@@ -43,7 +43,9 @@ class Slides:
         # Move cursor to bottom left
         print()
         print(f"\033[{height - controls_height - footer_height + 1};1H", end="")
-        print(f"[{self.index + 1}/{len(self.slides)}]")
+        print(
+            f"{DARKGRAY}[{RESET}{self.index + 1}{DARKGRAY}/{RESET}{len(self.slides)}{DARKGRAY}]{RESET}"
+        )
         if self.footer:
             print(f"{self.footer}")
         print(
