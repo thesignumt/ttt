@@ -4,6 +4,7 @@ RED = "\033[91m"
 CYAN = "\033[96m"
 GRAY = "\033[90m"
 YELLOW = "\033[33m"
+SPACE_HL = "\033[43m"
 RESET = "\033[0m"
 
 
@@ -12,6 +13,8 @@ def fmt_ttt(
 ) -> str:
     def colorize(c, idx, hl_set):
         if idx in hl_set:
+            if c == " ":
+                return f"{SPACE_HL} {RESET}"
             return f"{YELLOW}{c}{RESET}"
         match c:
             case "X":
