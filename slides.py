@@ -11,10 +11,11 @@ def getch():
 
 
 class Slides:
-    def __init__(self, slides: list[str]) -> None:
+    def __init__(self, slides: list[str], footer: str = "") -> None:
         self.slides = slides
         self.index = 0
-        self.offset = 0  # Track scroll offset
+        self.offset = 0  # track scroll offset
+        self.footer = footer
 
     def clear(self) -> None:
         os.system("cls" if os.name == "nt" else "clear")
@@ -28,7 +29,9 @@ class Slides:
         except Exception:
             height = 24
         controls_height = 3  # Number of lines for controls/info
-        visible_height = height - controls_height
+        footer_height = 1 if self.footer else 0
+        reserved_height = controls_height + footer_height
+        visible_height = height - reserved_height
 
         lines = self.slides[self.index].splitlines()
         total_lines = len(lines)
@@ -42,8 +45,11 @@ class Slides:
             print()
 
         # Move cursor to bottom left
-        print(f"\033[{height};1H", end="")
-        print(f"{DARKGRAY}[{self.index + 1}/{len(self.slides)}]{RESET}")
+        print()
+        print(f"\033[{height - controls_height - footer_height + 1};1H", end="")
+        print(f"[{self.index + 1}/{len(self.slides)}]")
+        if self.footer:
+            print(f"{self.footer}")
         print(
             f"{DARKGRAY}[n] Next  [p] Prev  [j] ↓  [k] ↑  [q] Quit{RESET}",
             end="",
