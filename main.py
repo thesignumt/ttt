@@ -36,12 +36,13 @@ def clsscr() -> None:
 
 
 def display_winner(winner: str) -> None:
-    if winner == "Draw":
-        print("draw...")
-    elif winner == "X":
-        print(f"{C.RED}YOU{C.RESET} won!")
-    elif winner == "O":
-        print(f"The {C.CYAN}AI{C.RESET} won!")
+    match winner:
+        case "Draw":
+            print("draw...")
+        case "X":
+            print(f"{C.RED}YOU{C.RESET} won!")
+        case "O":
+            print(f"The {C.CYAN}AI{C.RESET} won!")
 
 
 class Board:
@@ -50,11 +51,13 @@ class Board:
 
     def __str__(self) -> str:
         def colorize(cell) -> str:
-            if cell == "X":
-                return C.RED + "X" + C.RESET
-            elif cell == "O":
-                return C.CYAN + "O" + C.RESET
-            return EMPTY
+            match cell:
+                case "X":
+                    return C.RED + "X" + C.RESET
+                case "O":
+                    return C.CYAN + "O" + C.RESET
+                case _:
+                    return EMPTY
 
         b = [colorize(c) for c in self.board]
         g, r = C.GRAY, C.RESET
@@ -162,18 +165,19 @@ class TicTacToe:
             if key == b"\x03":  # Ctrl+C
                 self.running = False
                 return
-            if key in self.keymap:
-                move = self.keymap[key]
-                if self.board[move - 1] == EMPTY:
-                    self.board.update(move, "X")
-                    return
-            elif key in (b"f", b"F"):
-                self.running = False
-                return "quit"
-            elif key in (b"r", b"R"):
-                time.sleep(0.05)
-                self._reset_game(True)
-                return "reset"
+            match key:
+                case k if k in self.keymap:
+                    move = self.keymap[k]
+                    if self.board[move - 1] == EMPTY:
+                        self.board.update(move, "X")
+                        return
+                case k if k in (b"f", b"F"):
+                    self.running = False
+                    return "quit"
+                case k if k in (b"r", b"R"):
+                    time.sleep(0.05)
+                    self._reset_game(True)
+                    return "reset"
 
     def _get_ai_move(self) -> None:
         board = self.board.board
@@ -241,12 +245,13 @@ class TicTacToe:
         print(f"{c}[k]{r} {g}Exit game{r}")
         while True:
             key = msvcrt.getch()
-            if key in (b"h",):
-                return "rematch"
-            elif key in (b"j",):
-                return "menu"
-            elif key in (b"k", b"q", b"Q"):
-                return "exit"
+            match key:
+                case k if k in (b"h",):
+                    return "rematch"
+                case k if k in (b"j",):
+                    return "menu"
+                case k if k in (b"k", b"q", b"Q"):
+                    return "exit"
 
     def _play_game(self):
         while True:
@@ -256,11 +261,11 @@ class TicTacToe:
                 self._get_ai_move()
                 self._draw_board()
             while self.running:
-                result = self._get_human_move()
-                if result == "reset":
-                    continue
-                elif result == "quit":
-                    exit(0)
+                match self._get_human_move():
+                    case "reset":
+                        continue
+                    case "quit":
+                        exit(0)
                 self._update_game_state()
                 if not self.running:
                     break
@@ -273,14 +278,14 @@ class TicTacToe:
             clsscr()
             print(self.board)
             display_winner(self.winner or " ")
-            choice = self._post_game_menu()
-            if choice == "rematch":
-                self.board.reset()
-                continue
-            elif choice == "menu":
-                break
-            elif choice == "exit":
-                exit(0)
+            match self._post_game_menu():
+                case "rematch":
+                    self.board.reset()
+                    continue
+                case "menu":
+                    break
+                case "exit":
+                    exit(0)
 
 
 if __name__ == "__main__":
