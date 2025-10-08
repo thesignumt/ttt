@@ -1,13 +1,9 @@
-import msvcrt
 import os
 import shutil
+from msvcrt import getch
 
 DARKGRAY = "\033[90m"
 RESET = "\033[0m"
-
-
-def getch():
-    return msvcrt.getch().decode().lower()
 
 
 class Slides:
@@ -78,7 +74,11 @@ class Slides:
             visible_height = height - controls_height
             max_offset = max(0, len(lines) - visible_height)
 
-            match key:
+            if key in (b"\x00", b"\xe0"):
+                getch()
+                continue
+
+            match key.decode().lower():
                 case "n" if self.index < size - 1:
                     self.index += 1
                 case "p" if self.index > 0:
