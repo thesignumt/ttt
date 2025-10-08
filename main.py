@@ -241,11 +241,11 @@ class TicTacToe:
         print(f"{c}[k]{r} {g}Exit game{r}")
         while True:
             key = msvcrt.getch()
-            if key in (b"a",):
+            if key in (b"h",):
                 return "rematch"
-            elif key in (b"s",):
+            elif key in (b"j",):
                 return "menu"
-            elif key in (b"d", b"q", b"Q"):
+            elif key in (b"k", b"q", b"Q"):
                 return "exit"
 
     def _play_game(self):
