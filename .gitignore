@@ -176,3 +176,4 @@ cython_debug/
 # MacOS Finder
 .DS_Store
 dooing.json
+run.ps1
