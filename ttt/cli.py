@@ -288,6 +288,10 @@ class TicTacToe:
                     exit(0)
 
 
-if __name__ == "__main__":
+def main():
     game = TicTacToe()
     game()
+
+
+if __name__ == "__main__":
+    main()
