@@ -6,8 +6,8 @@ from dataclasses import dataclass
 
 from pyfiglet import figlet_format
 
-from tut import tut
-from utils import WRandom
+from .tut import tut
+from .utils import WRandom
 
 
 @dataclass

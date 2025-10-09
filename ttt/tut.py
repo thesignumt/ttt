@@ -1,4 +1,4 @@
-from slides import Slides
+from .slides import Slides
 
 RED = "\033[91m"
 CYAN = "\033[96m"
