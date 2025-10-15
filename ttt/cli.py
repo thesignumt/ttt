@@ -102,7 +102,7 @@ def menu():
     while True:
         clsscr()
         figlet = figlet_format("TicTacToe")
-        print(f"{C.GRAY}{figlet}\naka tcubed{C.RESET}\n")
+        print(f"{C.GRAY}{figlet}\nfrom tcubed{C.RESET}\n")
         for key, label in options:
             print(f"{C.GRAY}[{key}]{C.RESET} {label}")
 
